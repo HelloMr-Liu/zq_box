@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zq.bim.dao.DeviceDao">
+  <resultMap id="BaseResultMap" type="zq.bim.entity.Device">
+    <id column="DEVICE_ID" jdbcType="BIGINT" property="deviceId" />
+    <result column="DEVICE_NUMBER" jdbcType="VARCHAR" property="deviceNumber" />
+    <result column="PROJECT_ID" jdbcType="BIGINT" property="projectId" />
+    <result column="DEVICE_NAME" jdbcType="VARCHAR" property="deviceName" />
+    <result column="DEVICE_DESC" jdbcType="VARCHAR" property="deviceDesc" />
+    <result column="DEVICE_STATUS" jdbcType="BIT" property="deviceStatus" />
+    <result column="RELEVANCE_STATUS" jdbcType="BIT" property="relevanceStatus" />
+    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
+    <result column="HEARTBEAT_TIME" jdbcType="TIMESTAMP" property="heartbeatTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DEVICE_ID, DEVICE_NUMBER, PROJECT_ID, DEVICE_NAME, DEVICE_DESC, DEVICE_STATUS, RELEVANCE_STATUS,
+    IS_DELETED, HEARTBEAT_TIME, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_device
+    where DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_device
+    where DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="zq.bim.entity.Device">
+    insert into tbl_device (DEVICE_ID, DEVICE_NUMBER, PROJECT_ID,
+      DEVICE_NAME, DEVICE_DESC, DEVICE_STATUS,
+      RELEVANCE_STATUS, IS_DELETED, HEARTBEAT_TIME,
+      CREATE_TIME, UPDATE_TIME)
+    values (#{deviceId,jdbcType=BIGINT}, #{deviceNumber,jdbcType=VARCHAR}, #{projectId,jdbcType=BIGINT},
+      #{deviceName,jdbcType=VARCHAR}, #{deviceDesc,jdbcType=VARCHAR}, #{deviceStatus,jdbcType=BIT},
+      #{relevanceStatus,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, #{heartbeatTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zq.bim.entity.Device">
+    insert into tbl_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        DEVICE_ID,
+      </if>
+      <if test="deviceNumber != null">
+        DEVICE_NUMBER,
+      </if>
+      <if test="projectId != null">
+        PROJECT_ID,
+      </if>
+      <if test="deviceName != null">
+        DEVICE_NAME,
+      </if>
+      <if test="deviceDesc != null">
+        DEVICE_DESC,
+      </if>
+      <if test="deviceStatus != null">
+        DEVICE_STATUS,
+      </if>
+      <if test="relevanceStatus != null">
+        RELEVANCE_STATUS,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="heartbeatTime != null">
+        HEARTBEAT_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceNumber != null">
+        #{deviceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceName != null">
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatus != null">
+        #{deviceStatus,jdbcType=BIT},
+      </if>
+      <if test="relevanceStatus != null">
+        #{relevanceStatus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="heartbeatTime != null">
+        #{heartbeatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.Device">
+    update tbl_device
+    <set>
+      <if test="deviceNumber != null">
+        DEVICE_NUMBER = #{deviceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        PROJECT_ID = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceName != null">
+        DEVICE_NAME = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceDesc != null">
+        DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatus != null">
+        DEVICE_STATUS = #{deviceStatus,jdbcType=BIT},
+      </if>
+      <if test="relevanceStatus != null">
+        RELEVANCE_STATUS = #{relevanceStatus,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="heartbeatTime != null">
+        HEARTBEAT_TIME = #{heartbeatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zq.bim.entity.Device">
+    update tbl_device
+    set DEVICE_NUMBER = #{deviceNumber,jdbcType=VARCHAR},
+      PROJECT_ID = #{projectId,jdbcType=BIGINT},
+      DEVICE_NAME = #{deviceName,jdbcType=VARCHAR},
+      DEVICE_DESC = #{deviceDesc,jdbcType=VARCHAR},
+      DEVICE_STATUS = #{deviceStatus,jdbcType=BIT},
+      RELEVANCE_STATUS = #{relevanceStatus,jdbcType=BIT},
+      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      HEARTBEAT_TIME = #{heartbeatTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where DEVICE_ID = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <!--=============================自定义方法=====================-->
+  <select id="findRelevanceDeviceNumber" parameterMap="java.util.HashMap" resultType="java.lang.Integer">
+    select count(DEVICE_ID) FROM tbl_device  where IS_DELETED=#{isDeleted} and RELEVANCE_STATUS=#{isRelevance}
+    <if test="projectIds!=null">
+        and PROJECT_ID in
+        (
+            <foreach collection='projectIds' item='item' index='index' separator=','>
+                #{item}
+            </foreach>
+        )
+    </if>
+  </select>
+
+  <select id="findOne" parameterMap="java.lang.Long" resultType="zq.bim.entity.dto.DeviceDTO">
+    select * from tbl_device where DEVICE_ID = #{deviceId}
+  </select>
+
+  <select id="findByQuery" parameterType="zq.bim.entity.dto.query.QueryDeviceDefinition" resultType="zq.bim.entity.dto.DeviceDTO">
+    select * from tbl_device where IS_DELETED = #{isDeleted} and PROJECT_ID=#{projectId}
+    <if test="deviceName != null and deviceName != &quot;&quot; ">
+      and DEVICE_NAME LIKE CONCAT('%',#{deviceName},'%')
+    </if>
+    order by  CREATE_TIME desc
+  </select>
+
+  <select id="checkContentIsExist" parameterMap="java.util.HashMap" resultType="zq.bim.entity.dto.DeviceDTO">
+    select * from tbl_device where
+    IS_DELETED = #{isDeleted} and  DEVICE_NAME=#{deviceName}
+    <if test="deviceId != null">
+      and DEVICE_ID != #{deviceId},
+    </if>
+    or
+    IS_DELETED = #{isDeleted} and  DEVICE_NUMBER=#{deviceNumber}
+    <if test="deviceId != null">
+      and DEVICE_ID != #{deviceId},
+    </if>
+  </select>
+
+  <update id="batchDelete" parameterType="zq.bim.entity.dto.delete.DeleteDeviceDefinition">
+    UPDATE  tbl_device
+    <trim prefix ='set' prefixOverrides=',' >
+
+      <trim prefix ='IS_DELETED = case' suffix='end,'>
+        <foreach collection ='deleteIds' item ='item' index = 'index'>
+          when DEVICE_ID = #{item} then #{isDel}
+        </foreach>
+      </trim>
+
+      <trim prefix ='UPDATE_TIME = case' suffix='end'>
+        <foreach collection ='deleteIds' item ='item' index = 'index'>
+          when DEVICE_ID = #{item} then sysdate()
+        </foreach>
+      </trim>
+
+    </trim>
+    WHERE  PROJECT_ID=#{projectId} and DEVICE_ID in
+    (
+      <foreach collection='deleteIds' item='item' index='index' separator=','>
+            #{item}
+      </foreach>
+    )
+  </update>
+
+</mapper>
