@@ -7,10 +7,9 @@ package zq.bim.constant;
  */
 public enum STREAM_OP_STATE {
 	OPERATION_NONE(0,"无状态"),
-    OPERATION_INSERT(1,"添加"),
+    OPERATION_INSERT(1,"新增修改"),
     OPERATION_DELETE(2,"删除"),
-    operation_UPDATE(3,"修改"),
-    operation_USEING(4,"正在处理中");
+    operation_USEING(3,"正在处理中");
 
     public Integer STATE;           //状态值
     public String MESS;             //状态值的描述信息

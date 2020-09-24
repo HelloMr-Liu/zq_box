@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds">
-<property name="LOG_HOME" value="log/zq_box" />
+<property name="LOG_HOME" value="c:/log/zp_box" />
     <!-- 文件输出 -->
     <appender name="FILE"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -25,7 +25,7 @@
 
 
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
+            <level>INFO</level>
         </filter>
         <!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
         <prudent>false</prudent>

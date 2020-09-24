@@ -2,8 +2,15 @@ server:
   port: 8081
   servlet:
       context-path: /zq_box
-
+  
 spring:
+  pid:
+    file: c:/service/box/application.pid
+  
+  profiles:
+    active: 
+    - file
+    
   datasource:
     url: jdbc:mysql://192.168.0.108:3306/zq_box?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Hongkong
     username: root
@@ -24,4 +31,13 @@ spring:
 
 mybatis:
   mapper-locations: classpath:zq/bim/mapper/*.xml
-  type-aliases-package: zq.bim.entity  
+  type-aliases-package: zq.bim.entity
+  ##开启驼峰映射实体
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    zq:
+      bim:
+        dao: DEBUG

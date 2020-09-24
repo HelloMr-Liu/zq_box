@@ -2,19 +2,27 @@ package zq.bim.entity.vo;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 
 public class DeviceStreamSyncVo {
 
+	@JSONField(name="stream_id")
 	private Long streamId;
-
+	
+	@JSONField(serialize = false)
     private String deviceId;
 
+	@JSONField(name="pull_url")
     private String pullStreamAddress;
 
+	@JSONField(name="push_url")
     private String pushStreamAddress;
 
+	@JSONField(name="op_type")
     private Integer opStatus;
 
+    @JSONField(serialize = false)
     private Date createTime;
 
 	public Long getStreamId() {

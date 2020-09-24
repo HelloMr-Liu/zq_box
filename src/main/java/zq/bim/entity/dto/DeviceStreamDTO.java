@@ -15,6 +15,11 @@ public class DeviceStreamDTO {
     private Long streamId;
 
     /**
+     * 流配置名称
+     */
+    private String streamName;
+
+    /**
      * 项目id
      */
     private Long projectId;
@@ -55,12 +60,21 @@ public class DeviceStreamDTO {
 
     private Date createTime;
 
+
     public Long getStreamId() {
         return streamId;
     }
 
     public void setStreamId(Long streamId) {
         this.streamId = streamId;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
     }
 
     public Long getProjectId() {
@@ -76,7 +90,7 @@ public class DeviceStreamDTO {
     }
 
     public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId == null ? null : deviceId.trim();
+        this.deviceId = deviceId;
     }
 
     public String getPullStreamAddress() {
@@ -84,7 +98,7 @@ public class DeviceStreamDTO {
     }
 
     public void setPullStreamAddress(String pullStreamAddress) {
-        this.pullStreamAddress = pullStreamAddress == null ? null : pullStreamAddress.trim();
+        this.pullStreamAddress = pullStreamAddress;
     }
 
     public String getPushStreamAddress() {
@@ -92,7 +106,7 @@ public class DeviceStreamDTO {
     }
 
     public void setPushStreamAddress(String pushStreamAddress) {
-        this.pushStreamAddress = pushStreamAddress == null ? null : pushStreamAddress.trim();
+        this.pushStreamAddress = pushStreamAddress;
     }
 
     public String getPlayAddress() {
@@ -100,7 +114,7 @@ public class DeviceStreamDTO {
     }
 
     public void setPlayAddress(String playAddress) {
-        this.playAddress = playAddress == null ? null : playAddress.trim();
+        this.playAddress = playAddress;
     }
 
     public Integer getOpStatus() {
@@ -119,12 +133,12 @@ public class DeviceStreamDTO {
         this.liefStatus = liefStatus;
     }
 
-    public Boolean getIsDeleted() {
+    public Boolean getDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public Date getUpdateTime() {

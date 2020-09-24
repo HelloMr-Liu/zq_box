@@ -2,8 +2,10 @@ package zq.bim.entity.dto.parameter;
 
 import org.hibernate.validator.constraints.Length;
 import zq.bim.valid.AddValid;
+import zq.bim.valid.QueryValid;
 import zq.bim.valid.UpdateValid;
 
+import javax.management.Query;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -15,11 +17,16 @@ import javax.validation.constraints.NotNull;
 public class ParameterDeviceStreamDefinition {
 
     /**
+     * 流id
+     */
+    @NotNull(message = "流id为空",groups = {QueryValid.class,UpdateValid.class})
+    private Long streamId;
+
+    /**
      * 设备id
      */
-    @NotNull(message = "设备id为空",groups = {AddValid.class})
+    @NotNull(message = "设备id为空",groups = {AddValid.class,UpdateValid.class})
     private Long deviceId;
-
 
     /**
      * 项目id
@@ -27,12 +34,12 @@ public class ParameterDeviceStreamDefinition {
     @NotNull(message = "项目id为空",groups = {AddValid.class})
     private Long projectId;
 
-
     /**
-     * 流id
+     * 流配置名称
      */
-    @NotNull(message = "流id为空",groups = {UpdateValid.class})
-    private Long streamId;
+    @Length(max = 30,message = "配置名称长度超过30",groups = {AddValid.class,UpdateValid.class})
+    @NotBlank(message = "流配置名称为空",groups = {AddValid.class,UpdateValid.class})
+    private String streamName;
 
     /**
      * 拉流地址
@@ -99,6 +106,14 @@ public class ParameterDeviceStreamDefinition {
 
     public void setPlayAddress(String playAddress) {
         this.playAddress = playAddress;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
     }
 }
     

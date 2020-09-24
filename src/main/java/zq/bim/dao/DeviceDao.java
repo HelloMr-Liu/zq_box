@@ -1,7 +1,9 @@
 package zq.bim.dao;
 
+import org.apache.ibatis.annotations.Param;
 import zq.bim.entity.Device;
 import zq.bim.entity.DeviceStream;
+import zq.bim.entity.SystemOperationLogWithBLOBs;
 import zq.bim.entity.dto.DeviceDTO;
 import zq.bim.entity.dto.delete.DeleteDeviceDefinition;
 import zq.bim.entity.dto.query.QueryDeviceDefinition;
@@ -47,6 +49,13 @@ public interface DeviceDao {
     List<DeviceDTO> findByQuery(QueryDeviceDefinition definition);
 
     /**
+     * 获取已激活的所有设备情况
+     * @param parameters
+     * @return
+     */
+    List<DeviceDTO> findAllOnActivation(Map<String,Object> parameters);
+
+    /**
      * 查看设备内容是否重复
      * @param parameters
      * @return
@@ -59,5 +68,10 @@ public interface DeviceDao {
      */
     void batchDelete(DeleteDeviceDefinition definition);
 
+    /**
+     * 批量更新设备状态
+     * @param propertyValues
+     */
+    void batchUpdateDeviceState(@Param("contents") List<Device> propertyValues);
 
 }

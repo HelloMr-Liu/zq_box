@@ -5,7 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+
 import zq.bim.entity.dto.HeartbeatCheckDto;
+import zq.bim.entity.dto.InitDataSyncDto;
 import zq.bim.entity.dto.KeyDto;
 import zq.bim.entity.dto.StreamCallbackDto;
 import zq.bim.entity.dto.validate.DeviceNumberView;
@@ -14,7 +17,6 @@ import zq.bim.service.BoxSyncService;
 import zq.bim.util.UserUtil;
 
 @RestController
-@RequestMapping(value="/box")
 public class BoxSyncController {
 
 	
@@ -32,8 +34,8 @@ public class BoxSyncController {
 		String deviceNumber=dto.getDeviceNumber();
 		String userLock = (deviceNumber).intern();
 		synchronized (userLock) {
-			ReturnView rtn=boxSyncService.cmdKey(deviceNumber);
-			return rtn.toJson();
+			Object rtn=boxSyncService.cmdKey(deviceNumber);
+			return JSON.toJSONString(rtn);
 		}
 	}
 	
@@ -63,5 +65,19 @@ public class BoxSyncController {
 		ReturnView rtn=boxSyncService.streamCallback(dto);
 		
 		return rtn.toJson();
+	}
+	
+	/***
+	 * 初始化 设备数据校对
+	 * @param json
+	 * @return
+	 */
+	@RequestMapping(value="/initDataSync",produces="application/json;charset=utf-8")
+	public String initDataSync(@RequestBody String json) {
+		InitDataSyncDto dto=UserUtil.validate(json, InitDataSyncDto.class);
+		
+		Object rtn=boxSyncService.initDataSync(dto);
+		
+		return JSON.toJSONString(rtn);
 	}
 }

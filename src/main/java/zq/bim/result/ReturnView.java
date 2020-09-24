@@ -6,6 +6,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
@@ -25,6 +27,9 @@ public class ReturnView {
 		return new ReturnView(200, count, data);
 	}
 	public static ReturnView success( Object data) {
+		return new ReturnView(200, data);
+	}
+	public static ReturnView success2( Object data) {
 		return new ReturnView(200, data);
 	}
 	public static ReturnView error( String message) {
@@ -89,6 +94,8 @@ public class ReturnView {
 	}
 	public String toJson() {
 		SerializeConfig config = new SerializeConfig();
+		config.put(Long.class, ToStringSerializer.instance);
+		config.put(Long.TYPE , ToStringSerializer.instance);
 		// 驼峰转下划线
 		config.setPropertyNamingStrategy(PropertyNamingStrategy.SnakeCase);
 		return JSON.toJSONString(this, config, SerializerFeature.WriteNullListAsEmpty, SerializerFeature.WriteNullStringAsEmpty,
@@ -96,6 +103,9 @@ public class ReturnView {
 	}
 	public <T> String toJson(Class<T> clazz, String... properties) {
 		SerializeConfig config = new SerializeConfig();
+		config.put(Long.class, ToStringSerializer.class);
+		config.put(Long.TYPE , ToStringSerializer.instance);
+		
 		// 驼峰转下划线
 		config.setPropertyNamingStrategy(PropertyNamingStrategy.SnakeCase);
 		SimplePropertyPreFilter filter = new SimplePropertyPreFilter(clazz, properties);

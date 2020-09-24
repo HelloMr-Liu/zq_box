@@ -30,11 +30,18 @@ public interface ProjectDao {
     ProjectDTO findOne(Long projectId);
 
     /**
+     * 获取项目信息
+     * @param parameterMap
+     * @return
+     */
+    ProjectDTO findProjectByAccountAndPass(HashMap<String,Object> parameterMap);
+
+    /**
      * 查看名称是否存在
      * @param parameterMap
      * @return
      */
-    ProjectDTO checkNameIsExist(HashMap<String,Object> parameterMap);
+    ProjectDTO checkContentIsExist(HashMap<String,Object> parameterMap);
 
     /**
      * 按照条件获取信息列表

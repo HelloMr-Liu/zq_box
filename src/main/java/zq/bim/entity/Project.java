@@ -7,11 +7,23 @@ public class Project {
 
     private String projectName;
 
-    private Boolean isDeleted;
+    private Date updateTime;
+
+    private Long createUserId;
+
+    private Long fileId;
+
+    private String fileName;
+
+    private String projectAccount;
+
+    private String projectLeader;
+
+    private String projectAccessPass;
 
     private Date createTime;
 
-    private Date updateTime;
+    private Boolean isDeleted;
 
     public Long getProjectId() {
         return projectId;
@@ -29,12 +41,60 @@ public class Project {
         this.projectName = projectName == null ? null : projectName.trim();
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName == null ? null : fileName.trim();
+    }
+
+    public String getProjectAccount() {
+        return projectAccount;
+    }
+
+    public void setProjectAccount(String projectAccount) {
+        this.projectAccount = projectAccount == null ? null : projectAccount.trim();
+    }
+
+    public String getProjectLeader() {
+        return projectLeader;
+    }
+
+    public void setProjectLeader(String projectLeader) {
+        this.projectLeader = projectLeader == null ? null : projectLeader.trim();
+    }
+
+    public String getProjectAccessPass() {
+        return projectAccessPass;
+    }
+
+    public void setProjectAccessPass(String projectAccessPass) {
+        this.projectAccessPass = projectAccessPass == null ? null : projectAccessPass.trim();
     }
 
     public Date getCreateTime() {
@@ -45,11 +105,11 @@ public class Project {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

@@ -19,6 +19,19 @@ public class DeleteDeviceDefinition extends DeleteGlobalDefinition {
     private Long projectId;
 
 
+    /**
+     * 设备激活情况
+     */
+    private boolean isRelevance;
+
+    public boolean isRelevance() {
+        return isRelevance;
+    }
+
+    public void setRelevance(boolean relevance) {
+        isRelevance = relevance;
+    }
+
     public Long getProjectId() {
         return projectId;
     }

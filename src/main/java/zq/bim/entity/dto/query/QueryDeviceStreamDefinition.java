@@ -16,6 +16,19 @@ public class QueryDeviceStreamDefinition extends QueryGlobalDefinition{
     @NotNull(message = "设备id为空",groups = {QueryValid.class})
     private Long deviceId;
 
+    /**
+     * 流名称
+     */
+    private String streamName;
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
+    }
+
     public Long getDeviceId() {
         return deviceId;
     }

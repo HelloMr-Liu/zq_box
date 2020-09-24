@@ -1,5 +1,6 @@
 package zq.bim.entity.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,27 +13,27 @@ public class PageBeanDefinition<T>  {
     /**
      * 数据集合
      */
-    private List<T> list;
+    private List<T> list=new ArrayList<>();
 
     /**
      * 当前页
      */
-    private Integer currentPage;
+    private Integer currentPage=0;
 
     /**
      * 每页多少数据
      */
-    private Integer pageSize;
+    private Integer pageSize=0;
 
     /**
      * 数据总条数
      */
-    private Long totalCount;
+    private Long totalCount=0L;
 
     /**
      * 总页数
      */
-    private Integer pageCount;
+    private Integer pageCount=0;
 
     public List<T> getList() {
         return list;

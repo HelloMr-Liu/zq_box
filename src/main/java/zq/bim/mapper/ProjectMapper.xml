@@ -4,15 +4,22 @@
   <resultMap id="BaseResultMap" type="zq.bim.entity.Project">
     <id column="PROJECT_ID" jdbcType="BIGINT" property="projectId" />
     <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
-    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATE_USER_ID" jdbcType="BIGINT" property="createUserId" />
+    <result column="FILE_ID" jdbcType="BIGINT" property="fileId" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="PROJECT_ACCOUNT" jdbcType="VARCHAR" property="projectAccount" />
+    <result column="PROJECT_LEADER" jdbcType="VARCHAR" property="projectLeader" />
+    <result column="PROJECT_ACCESS_PASS" jdbcType="VARCHAR" property="projectAccessPass" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    PROJECT_ID, PROJECT_NAME, IS_DELETED, CREATE_TIME, UPDATE_TIME
+    PROJECT_ID, PROJECT_NAME, UPDATE_TIME, CREATE_USER_ID, FILE_ID, FILE_NAME, PROJECT_ACCOUNT,
+    PROJECT_LEADER, PROJECT_ACCESS_PASS, CREATE_TIME, IS_DELETED
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_project
     where PROJECT_ID = #{projectId,jdbcType=BIGINT}
@@ -22,10 +29,14 @@
     where PROJECT_ID = #{projectId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="zq.bim.entity.Project">
-    insert into tbl_project (PROJECT_ID, PROJECT_NAME, IS_DELETED, 
-      CREATE_TIME, UPDATE_TIME)
-    values (#{projectId,jdbcType=BIGINT}, #{projectName,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into tbl_project (PROJECT_ID, PROJECT_NAME, UPDATE_TIME,
+      CREATE_USER_ID, FILE_ID, FILE_NAME,
+      PROJECT_ACCOUNT, PROJECT_LEADER, PROJECT_ACCESS_PASS,
+      CREATE_TIME, IS_DELETED)
+    values (#{projectId,jdbcType=BIGINT}, #{projectName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createUserId,jdbcType=BIGINT}, #{fileId,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR},
+      #{projectAccount,jdbcType=VARCHAR}, #{projectLeader,jdbcType=VARCHAR}, #{projectAccessPass,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="zq.bim.entity.Project">
     insert into tbl_project
@@ -36,14 +47,32 @@
       <if test="projectName != null">
         PROJECT_NAME,
       </if>
-      <if test="isDeleted != null">
-        IS_DELETED,
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID,
+      </if>
+      <if test="fileId != null">
+        FILE_ID,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="projectAccount != null">
+        PROJECT_ACCOUNT,
+      </if>
+      <if test="projectLeader != null">
+        PROJECT_LEADER,
+      </if>
+      <if test="projectAccessPass != null">
+        PROJECT_ACCESS_PASS,
       </if>
       <if test="createTime != null">
         CREATE_TIME,
       </if>
-      <if test="updateTime != null">
-        UPDATE_TIME,
+      <if test="isDeleted != null">
+        IS_DELETED,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -53,14 +82,32 @@
       <if test="projectName != null">
         #{projectName,jdbcType=VARCHAR},
       </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAccount != null">
+        #{projectAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeader != null">
+        #{projectLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAccessPass != null">
+        #{projectAccessPass,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -70,14 +117,32 @@
       <if test="projectName != null">
         PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
       </if>
-      <if test="isDeleted != null">
-        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        FILE_ID = #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAccount != null">
+        PROJECT_ACCOUNT = #{projectAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeader != null">
+        PROJECT_LEADER = #{projectLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAccessPass != null">
+        PROJECT_ACCESS_PASS = #{projectAccessPass,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
       </if>
     </set>
     where PROJECT_ID = #{projectId,jdbcType=BIGINT}
@@ -85,27 +150,43 @@
   <update id="updateByPrimaryKey" parameterType="zq.bim.entity.Project">
     update tbl_project
     set PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
-      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      FILE_ID = #{fileId,jdbcType=BIGINT},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      PROJECT_ACCOUNT = #{projectAccount,jdbcType=VARCHAR},
+      PROJECT_LEADER = #{projectLeader,jdbcType=VARCHAR},
+      PROJECT_ACCESS_PASS = #{projectAccessPass,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      IS_DELETED = #{isDeleted,jdbcType=BIT}
     where PROJECT_ID = #{projectId,jdbcType=BIGINT}
   </update>
 
 
   <!--==============自定义方法信息====================-->
-  <select id="findOne" parameterMap="java.lang.Long" resultType="zq.bim.entity.dto.ProjectDTO">
+  <select id="findOne" parameterType="java.lang.Long" resultType="zq.bim.entity.dto.ProjectDTO">
     select * from tbl_project where PROJECT_ID = #{projectId}
   </select>
 
-  <select id="checkNameIsExist" parameterMap="java.util.HashMap" resultType="zq.bim.entity.dto.ProjectDTO">
-    select * from tbl_project where IS_DELETED = #{isDeleted} and  PROJECT_NAME=#{projectName}
+  <select id="findProjectByAccountAndPass" parameterType="java.util.HashMap" resultType="zq.bim.entity.dto.ProjectDTO">
+        select * from tbl_project where IS_DELETED = #{isDeleted} AND  PROJECT_ACCOUNT = #{projectAccount} AND PROJECT_ACCESS_PASS = #{projectAccessPass}
+  </select>
+
+  <select id="checkContentIsExist" parameterType="java.util.HashMap" resultType="zq.bim.entity.dto.ProjectDTO">
+    select * from tbl_project where
+    IS_DELETED = #{isDeleted} and  PROJECT_NAME=#{projectName}
     <if test="projectId != null">
-      and PROJECT_ID != #{projectId},
+      and PROJECT_ID != #{projectId}
+    </if>
+    or
+    IS_DELETED = #{isDeleted} and  PROJECT_ACCOUNT=#{projectAccount}
+    <if test="projectId != null">
+      and PROJECT_ID != #{projectId}
     </if>
   </select>
 
   <select id="findByQuery" parameterType="zq.bim.entity.dto.query.QueryProjectDefinition" resultType="zq.bim.entity.dto.ProjectDTO">
-    select * from tbl_project where IS_DELETED = #{isDeleted}
+    select * from tbl_project where IS_DELETED = #{isDel}
     <if test="projectName != null and projectName != &quot;&quot; ">
       and PROJECT_NAME LIKE CONCAT('%',#{projectName},'%')
     </if>

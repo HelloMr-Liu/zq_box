@@ -3,20 +3,21 @@
 <mapper namespace="zq.bim.dao.UserDao">
   <resultMap id="BaseResultMap" type="zq.bim.entity.User">
     <id column="USER_ID" jdbcType="BIGINT" property="userId" />
-    <result column="PROJECT_ID" jdbcType="BIGINT" property="projectId" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
     <result column="USER_ACCOUNT" jdbcType="VARCHAR" property="userAccount" />
     <result column="USER_PASS" jdbcType="VARCHAR" property="userPass" />
-    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="CREATE_USER_ID" jdbcType="BIGINT" property="createUserId" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    USER_ID, PROJECT_ID, USER_NAME, USER_ACCOUNT, USER_PASS, IS_DELETED, CREATE_TIME, 
-    UPDATE_TIME
+    USER_ID, USER_NAME, USER_ACCOUNT, USER_PASS, USER_TYPE, CREATE_USER_ID, CREATE_TIME,
+    UPDATE_TIME, IS_DELETED
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_user
     where USER_ID = #{userId,jdbcType=BIGINT}
@@ -26,21 +27,20 @@
     where USER_ID = #{userId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="zq.bim.entity.User">
-    insert into tbl_user (USER_ID, PROJECT_ID, USER_NAME, 
-      USER_ACCOUNT, USER_PASS, IS_DELETED, 
-      CREATE_TIME, UPDATE_TIME)
-    values (#{userId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{userAccount,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into tbl_user (USER_ID, USER_NAME, USER_ACCOUNT,
+      USER_PASS, USER_TYPE, CREATE_USER_ID,
+      CREATE_TIME, UPDATE_TIME, IS_DELETED
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userAccount,jdbcType=VARCHAR},
+      #{userPass,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="zq.bim.entity.User">
     insert into tbl_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         USER_ID,
-      </if>
-      <if test="projectId != null">
-        PROJECT_ID,
       </if>
       <if test="userName != null">
         USER_NAME,
@@ -51,8 +51,11 @@
       <if test="userPass != null">
         USER_PASS,
       </if>
-      <if test="isDeleted != null">
-        IS_DELETED,
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID,
       </if>
       <if test="createTime != null">
         CREATE_TIME,
@@ -60,13 +63,13 @@
       <if test="updateTime != null">
         UPDATE_TIME,
       </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="projectId != null">
-        #{projectId,jdbcType=BIGINT},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
@@ -77,8 +80,11 @@
       <if test="userPass != null">
         #{userPass,jdbcType=VARCHAR},
       </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -86,14 +92,14 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.User">
     update tbl_user
     <set>
-      <if test="projectId != null">
-        PROJECT_ID = #{projectId,jdbcType=BIGINT},
-      </if>
       <if test="userName != null">
         USER_NAME = #{userName,jdbcType=VARCHAR},
       </if>
@@ -103,8 +109,11 @@
       <if test="userPass != null">
         USER_PASS = #{userPass,jdbcType=VARCHAR},
       </if>
-      <if test="isDeleted != null">
-        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
@@ -112,18 +121,76 @@
       <if test="updateTime != null">
         UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=BIT},
+      </if>
     </set>
     where USER_ID = #{userId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="zq.bim.entity.User">
     update tbl_user
-    set PROJECT_ID = #{projectId,jdbcType=BIGINT},
-      USER_NAME = #{userName,jdbcType=VARCHAR},
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
       USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
       USER_PASS = #{userPass,jdbcType=VARCHAR},
-      IS_DELETED = #{isDeleted,jdbcType=BIT},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      IS_DELETED = #{isDeleted,jdbcType=BIT}
     where USER_ID = #{userId,jdbcType=BIGINT}
   </update>
+
+  <!--==============自定义方法信息====================-->
+  <select id="findOne" parameterType="java.lang.Long" resultType="zq.bim.entity.dto.UserDTO">
+    select * from tbl_user where USER_ID = #{userId}
+  </select>
+
+  <select id="findUserByAccountAndPass" parameterType="java.util.HashMap" resultType="zq.bim.entity.dto.UserDTO">
+        select * from tbl_user where IS_DELETED = #{isDeleted} AND  USER_ACCOUNT = #{userAccount} AND USER_PASS = #{userPass}
+  </select>
+
+  <select id="checkContentIsExist" parameterType="java.util.HashMap" resultType="zq.bim.entity.dto.UserDTO">
+    select * from tbl_user where
+    IS_DELETED = #{isDeleted} and  USER_ACCOUNT=#{userAccount}
+    <if test="userId != null">
+      and USER_ID != #{userId}
+    </if>
+  </select>
+
+  <select id="findByQuery" parameterType="zq.bim.entity.dto.query.QueryUserDefinition" resultType="zq.bim.entity.dto.UserDTO">
+    select * from tbl_user where IS_DELETED = #{isDel}
+    <if test="userType != null and userType != &quot;&quot; ">
+      and USER_TYPE=#{userType}
+    </if>
+    <if test="userAccount != null and userAccount != &quot;&quot; ">
+      and USER_ACCOUNT LIKE CONCAT('%',#{userAccount},'%')
+    </if>
+    order by  CREATE_TIME desc
+  </select>
+
+  <update id="batchDelete" parameterType="zq.bim.entity.dto.delete.DeleteUserDefinition">
+    UPDATE  tbl_user
+    <trim prefix ='set' prefixOverrides=',' >
+
+      <trim prefix ='IS_DELETED = case' suffix='end,'>
+        <foreach collection ='deleteIds' item ='item' index = 'index'>
+          when USER_ID = #{item} then #{isDel}
+        </foreach>
+      </trim>
+
+      <trim prefix ='UPDATE_TIME = case' suffix='end'>
+        <foreach collection ='deleteIds' item ='item' index = 'index'>
+          when USER_ID = #{item} then sysdate()
+        </foreach>
+      </trim>
+
+    </trim>
+    WHERE  USER_ID in
+    (
+    <foreach collection='deleteIds' item='item' index='index' separator=','>
+      #{item}
+    </foreach>
+    )
+  </update>
+
 </mapper>

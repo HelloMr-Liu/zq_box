@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zq.bim.dao.FileListDao" >
+  <resultMap id="BaseResultMap" type="zq.bim.entity.FileList" >
+    <id column="FILE_ID" property="fileId" jdbcType="CHAR" />
+    <result column="PROJECT_ID" property="projectId" jdbcType="CHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="FILE_SIZE" property="fileSize" jdbcType="BIGINT" />
+    <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR" />
+    <result column="FILE_MD5" property="fileMd5" jdbcType="CHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FILE_ID, PROJECT_ID, FILE_NAME, FILE_SIZE, FILE_TYPE, FILE_MD5, CREATE_USER_ID, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_file_list
+    where FILE_ID = #{fileId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_file_list
+    where FILE_ID = #{fileId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="zq.bim.entity.FileList" >
+    insert into tbl_file_list (FILE_ID, PROJECT_ID, FILE_NAME, 
+      FILE_SIZE, FILE_TYPE, FILE_MD5, 
+      CREATE_USER_ID, CREATE_TIME)
+    values (#{fileId,jdbcType=CHAR}, #{projectId,jdbcType=CHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{fileSize,jdbcType=BIGINT}, #{fileType,jdbcType=VARCHAR}, #{fileMd5,jdbcType=CHAR}, 
+      #{createUserId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zq.bim.entity.FileList" >
+    insert into tbl_file_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        FILE_ID,
+      </if>
+      <if test="projectId != null" >
+        PROJECT_ID,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE,
+      </if>
+      <if test="fileType != null" >
+        FILE_TYPE,
+      </if>
+      <if test="fileMd5 != null" >
+        FILE_MD5,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileId != null" >
+        #{fileId,jdbcType=CHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileMd5 != null" >
+        #{fileMd5,jdbcType=CHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.FileList" >
+    update tbl_file_list
+    <set >
+      <if test="projectId != null" >
+        PROJECT_ID = #{projectId,jdbcType=CHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="fileType != null" >
+        FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileMd5 != null" >
+        FILE_MD5 = #{fileMd5,jdbcType=CHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FILE_ID = #{fileId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zq.bim.entity.FileList" >
+    update tbl_file_list
+    set PROJECT_ID = #{projectId,jdbcType=CHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+      FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      FILE_MD5 = #{fileMd5,jdbcType=CHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where FILE_ID = #{fileId,jdbcType=CHAR}
+  </update>
+  
+  <select id="selectByMd5" parameterType="java.lang.String" resultMap="BaseResultMap">
+	SELECT <include refid="Base_Column_List" />
+	FROM tbl_file_list
+	WHERE FILE_MD5 = #{md5}
+	ORDER BY CREATE_TIME DESC
+	LIMIT 0,1
+  </select>
+</mapper>

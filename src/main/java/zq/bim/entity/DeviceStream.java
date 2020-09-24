@@ -2,14 +2,14 @@ package zq.bim.entity;
 
 import java.util.Date;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 public class DeviceStream {
     private Long streamId;
 
     private Long projectId;
 
-    private String deviceId;
+    private Long deviceId;
+
+    private String streamName;
 
     private String pullStreamAddress;
 
@@ -21,12 +21,13 @@ public class DeviceStream {
 
     private Boolean liefStatus;
 
-    @JSONField(serialize = false)
     private Boolean isDeleted;
 
-    private Date updateTime;
+    private Long createUserId;
 
     private Date createTime;
+
+    private Date updateTime;
 
     public Long getStreamId() {
         return streamId;
@@ -44,12 +45,20 @@ public class DeviceStream {
         this.projectId = projectId;
     }
 
-    public String getDeviceId() {
+    public Long getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId == null ? null : deviceId.trim();
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName == null ? null : streamName.trim();
     }
 
     public String getPullStreamAddress() {
@@ -100,12 +109,12 @@ public class DeviceStream {
         this.isDeleted = isDeleted;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
     public Date getCreateTime() {
@@ -114,5 +123,13 @@ public class DeviceStream {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

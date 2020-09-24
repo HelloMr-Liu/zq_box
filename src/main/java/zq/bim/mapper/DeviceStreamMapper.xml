@@ -4,21 +4,24 @@
   <resultMap id="BaseResultMap" type="zq.bim.entity.DeviceStream">
     <id column="STREAM_ID" jdbcType="BIGINT" property="streamId" />
     <result column="PROJECT_ID" jdbcType="BIGINT" property="projectId" />
-    <result column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />
+    <result column="DEVICE_ID" jdbcType="BIGINT" property="deviceId" />
+    <result column="STREAM_NAME" jdbcType="VARCHAR" property="streamName" />
     <result column="PULL_STREAM_ADDRESS" jdbcType="VARCHAR" property="pullStreamAddress" />
     <result column="PUSH_STREAM_ADDRESS" jdbcType="VARCHAR" property="pushStreamAddress" />
+    <result column="PLAY_ADDRESS" jdbcType="VARCHAR" property="playAddress" />
     <result column="OP_STATUS" jdbcType="INTEGER" property="opStatus" />
     <result column="LIEF_STATUS" jdbcType="BIT" property="liefStatus" />
     <result column="IS_DELETED" jdbcType="BIT" property="isDeleted" />
-    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATE_USER_ID" jdbcType="BIGINT" property="createUserId" />
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    STREAM_ID, PROJECT_ID, DEVICE_ID, PULL_STREAM_ADDRESS, PUSH_STREAM_ADDRESS, OP_STATUS, 
-    LIEF_STATUS, IS_DELETED, UPDATE_TIME, CREATE_TIME
+    STREAM_ID, PROJECT_ID, DEVICE_ID, STREAM_NAME, PULL_STREAM_ADDRESS, PUSH_STREAM_ADDRESS,
+    PLAY_ADDRESS, OP_STATUS, LIEF_STATUS, IS_DELETED, CREATE_USER_ID, CREATE_TIME, UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_device_stream
     where STREAM_ID = #{streamId,jdbcType=BIGINT}
@@ -28,14 +31,16 @@
     where STREAM_ID = #{streamId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="zq.bim.entity.DeviceStream">
-    insert into tbl_device_stream (STREAM_ID, PROJECT_ID, DEVICE_ID, 
-      PULL_STREAM_ADDRESS, PUSH_STREAM_ADDRESS, OP_STATUS, 
-      LIEF_STATUS, IS_DELETED, UPDATE_TIME, 
-      CREATE_TIME)
-    values (#{streamId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{deviceId,jdbcType=VARCHAR}, 
-      #{pullStreamAddress,jdbcType=VARCHAR}, #{pushStreamAddress,jdbcType=VARCHAR}, #{opStatus,jdbcType=INTEGER}, 
-      #{liefStatus,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into tbl_device_stream (STREAM_ID, PROJECT_ID, DEVICE_ID,
+      STREAM_NAME, PULL_STREAM_ADDRESS, PUSH_STREAM_ADDRESS,
+      PLAY_ADDRESS, OP_STATUS, LIEF_STATUS,
+      IS_DELETED, CREATE_USER_ID, CREATE_TIME,
+      UPDATE_TIME)
+    values (#{streamId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT},
+      #{streamName,jdbcType=VARCHAR}, #{pullStreamAddress,jdbcType=VARCHAR}, #{pushStreamAddress,jdbcType=VARCHAR},
+      #{playAddress,jdbcType=VARCHAR}, #{opStatus,jdbcType=INTEGER}, #{liefStatus,jdbcType=BIT},
+      #{isDeleted,jdbcType=BIT}, #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="zq.bim.entity.DeviceStream">
     insert into tbl_device_stream
@@ -49,11 +54,17 @@
       <if test="deviceId != null">
         DEVICE_ID,
       </if>
+      <if test="streamName != null">
+        STREAM_NAME,
+      </if>
       <if test="pullStreamAddress != null">
         PULL_STREAM_ADDRESS,
       </if>
       <if test="pushStreamAddress != null">
         PUSH_STREAM_ADDRESS,
+      </if>
+      <if test="playAddress != null">
+        PLAY_ADDRESS,
       </if>
       <if test="opStatus != null">
         OP_STATUS,
@@ -64,11 +75,14 @@
       <if test="isDeleted != null">
         IS_DELETED,
       </if>
-      <if test="updateTime != null">
-        UPDATE_TIME,
+      <if test="createUserId != null">
+        CREATE_USER_ID,
       </if>
       <if test="createTime != null">
         CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -79,13 +93,19 @@
         #{projectId,jdbcType=BIGINT},
       </if>
       <if test="deviceId != null">
-        #{deviceId,jdbcType=VARCHAR},
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="streamName != null">
+        #{streamName,jdbcType=VARCHAR},
       </if>
       <if test="pullStreamAddress != null">
         #{pullStreamAddress,jdbcType=VARCHAR},
       </if>
       <if test="pushStreamAddress != null">
         #{pushStreamAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="playAddress != null">
+        #{playAddress,jdbcType=VARCHAR},
       </if>
       <if test="opStatus != null">
         #{opStatus,jdbcType=INTEGER},
@@ -96,11 +116,14 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -111,13 +134,19 @@
         PROJECT_ID = #{projectId,jdbcType=BIGINT},
       </if>
       <if test="deviceId != null">
-        DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+        DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="streamName != null">
+        STREAM_NAME = #{streamName,jdbcType=VARCHAR},
       </if>
       <if test="pullStreamAddress != null">
         PULL_STREAM_ADDRESS = #{pullStreamAddress,jdbcType=VARCHAR},
       </if>
       <if test="pushStreamAddress != null">
         PUSH_STREAM_ADDRESS = #{pushStreamAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="playAddress != null">
+        PLAY_ADDRESS = #{playAddress,jdbcType=VARCHAR},
       </if>
       <if test="opStatus != null">
         OP_STATUS = #{opStatus,jdbcType=INTEGER},
@@ -128,11 +157,14 @@
       <if test="isDeleted != null">
         IS_DELETED = #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="updateTime != null">
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createUserId != null">
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where STREAM_ID = #{streamId,jdbcType=BIGINT}
@@ -140,14 +172,17 @@
   <update id="updateByPrimaryKey" parameterType="zq.bim.entity.DeviceStream">
     update tbl_device_stream
     set PROJECT_ID = #{projectId,jdbcType=BIGINT},
-      DEVICE_ID = #{deviceId,jdbcType=VARCHAR},
+      DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+      STREAM_NAME = #{streamName,jdbcType=VARCHAR},
       PULL_STREAM_ADDRESS = #{pullStreamAddress,jdbcType=VARCHAR},
       PUSH_STREAM_ADDRESS = #{pushStreamAddress,jdbcType=VARCHAR},
+      PLAY_ADDRESS = #{playAddress,jdbcType=VARCHAR},
       OP_STATUS = #{opStatus,jdbcType=INTEGER},
       LIEF_STATUS = #{liefStatus,jdbcType=BIT},
       IS_DELETED = #{isDeleted,jdbcType=BIT},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where STREAM_ID = #{streamId,jdbcType=BIGINT}
   </update>
 
@@ -159,7 +194,7 @@
  	FROM  tbl_device_stream
  	WHERE DEVICE_ID=#{deviceId}
  	AND IS_DELETED=FALSE
- 	AND OP_STATUS<![CDATA[ <> ]]>0 AND OP_STATUS<![CDATA[ <> ]]>4
+ 	AND OP_STATUS<![CDATA[ <> ]]>0 AND OP_STATUS<![CDATA[ <> ]]>3
   </select>
   
   <update id="updateStreamStatus">
@@ -178,12 +213,20 @@
   	UPDATE tbl_device_stream SET OP_STATUS=#{status}
   	WHERE IS_DELETED=FALSE AND STREAM_ID IN
     <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
-      #{item.streamId}
+      #{item}
     </foreach>
   </update>
+  
+  <select id="selectByDeviceId" resultMap="BaseResultMap">
+  	SELECT
+  	<include refid="Base_Column_List" />
+ 	FROM  tbl_device_stream
+ 	WHERE DEVICE_ID=#{deviceId}
+ 	AND IS_DELETED=FALSE
+  </select>
 
 
-  <select id="findValidDeviceStreamNumber" parameterMap="java.util.HashMap" resultType="java.lang.Integer">
+  <select id="findValidDeviceStreamNumber" parameterType="java.util.HashMap" resultType="java.lang.Integer">
     select count(STREAM_ID) FROM tbl_device_stream  where IS_DELETED=#{isDeleted}
     <if test="deviceIds!=null">
       and DEVICE_ID in
@@ -196,24 +239,29 @@
   </select>
 
 
-  <select id="findOne" parameterMap="java.lang.Long" resultType="zq.bim.entity.dto.DeviceStreamDTO">
+  <select id="findOne" parameterType="java.lang.Long" resultType="zq.bim.entity.dto.DeviceStreamDTO">
     select * from tbl_device_stream where STREAM_ID = #{streamId}
   </select>
 
   <select id="findByQuery" parameterType="zq.bim.entity.dto.query.QueryDeviceStreamDefinition" resultType="zq.bim.entity.dto.DeviceStreamDTO">
-    select * from tbl_device_stream where IS_DELETED = #{isDeleted} and DEVICE_ID=#{deviceId}
+    select * from tbl_device_stream where IS_DELETED = #{isDel} and DEVICE_ID=#{deviceId}
     order by  CREATE_TIME desc
   </select>
 
-  <select id="checkNameIsExist" parameterMap="java.util.HashMap" resultType="zq.bim.entity.dto.DeviceDTO">
+  <select id="checkContentIsExist" parameterType="java.util.HashMap" resultType="zq.bim.entity.dto.DeviceStreamDTO">
     select * from tbl_device_stream where
     IS_DELETED = #{isDeleted} and  PUSH_STREAM_ADDRESS=#{pushStreamAddress}
     <if test="streamId != null">
-      and STREAM_ID != #{streamId},
+      and STREAM_ID != #{streamId}
+    </if>
+    or
+    DEVICE_ID=#{deviceId} and IS_DELETED = #{isDeleted} and  STREAM_NAME=#{streamName}
+    <if test="streamId != null">
+      and STREAM_ID != #{streamId}
     </if>
   </select>
 
-  <update id="batchDelete" parameterType="zq.bim.entity.dto.delete.DeleteDeviceDefinition">
+  <update id="batchDelete" parameterType="zq.bim.entity.dto.delete.DeleteDeviceStreamDefinition">
     UPDATE  tbl_device_stream
     <trim prefix ='set' prefixOverrides=',' >
 
@@ -223,9 +271,15 @@
         </foreach>
       </trim>
 
-      <trim prefix ='UPDATE_TIME = case' suffix='end'>
+      <trim prefix ='UPDATE_TIME = case' suffix='end,'>
         <foreach collection ='deleteIds' item ='item' index = 'index'>
           when STREAM_ID = #{item} then sysdate()
+        </foreach>
+      </trim>
+
+      <trim prefix ='OP_STATUS = case' suffix='end'>
+        <foreach collection ='deleteIds' item ='item' index = 'index'>
+          when STREAM_ID = #{item} then #{opStatus}
         </foreach>
       </trim>
 

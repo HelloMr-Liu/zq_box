@@ -2,11 +2,10 @@ package zq.bim.entity.dto;
 
 import java.util.Date;
 
-
 /**
  *  功能：映射项目信息表
  *  作者：刘梓江
- *  时间：2020/9/21 16:32
+ *  时间：2020/9/22 17:33
  */
 public class ProjectDTO {
 
@@ -20,11 +19,38 @@ public class ProjectDTO {
      */
     private String projectName;
 
-    private Boolean isDeleted;
+    /**
+     * 文件id
+     */
+    private Long fileId;
+
+    /**
+     * 文件名称
+     */
+    private String fileName;
+
+    /**
+     * 项目账号
+     */
+    private String projectAccount;
+
+    /**
+     * 项目扶着人
+     */
+    private String projectLeader;
+
+    /**
+     * 项目访问密码
+     */
+    private String projectAccessPass;
 
     private Date createTime;
 
+    private Boolean isDeleted;
+
     private Date updateTime;
+
+    private Long createUserId;
 
     public Long getProjectId() {
         return projectId;
@@ -42,12 +68,60 @@ public class ProjectDTO {
         this.projectName = projectName == null ? null : projectName.trim();
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName == null ? null : fileName.trim();
+    }
+
+    public String getProjectAccount() {
+        return projectAccount;
+    }
+
+    public void setProjectAccount(String projectAccount) {
+        this.projectAccount = projectAccount == null ? null : projectAccount.trim();
+    }
+
+    public String getProjectLeader() {
+        return projectLeader;
+    }
+
+    public void setProjectLeader(String projectLeader) {
+        this.projectLeader = projectLeader == null ? null : projectLeader.trim();
+    }
+
+    public String getProjectAccessPass() {
+        return projectAccessPass;
+    }
+
+    public void setProjectAccessPass(String projectAccessPass) {
+        this.projectAccessPass = projectAccessPass == null ? null : projectAccessPass.trim();
     }
 
     public Date getCreateTime() {
@@ -58,11 +132,11 @@ public class ProjectDTO {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

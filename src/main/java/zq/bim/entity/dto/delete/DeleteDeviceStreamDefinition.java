@@ -17,6 +17,11 @@ public class DeleteDeviceStreamDefinition extends DeleteGlobalDefinition {
     @NotNull(message = "设备id为空",groups = {DeleteValid.class})
     private Long deviceId;
 
+    /**
+     * 更新操作状态
+     */
+    private Integer opStatus;
+
 
     public Long getDeviceId() {
         return deviceId;
@@ -24,6 +29,15 @@ public class DeleteDeviceStreamDefinition extends DeleteGlobalDefinition {
 
     public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
+    }
+
+
+    public Integer getOpStatus() {
+        return opStatus;
+    }
+
+    public void setOpStatus(Integer opStatus) {
+        this.opStatus = opStatus;
     }
 }
     

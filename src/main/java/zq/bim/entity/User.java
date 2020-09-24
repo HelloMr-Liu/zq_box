@@ -5,19 +5,21 @@ import java.util.Date;
 public class User {
     private Long userId;
 
-    private Long projectId;
-
     private String userName;
 
     private String userAccount;
 
     private String userPass;
 
-    private Boolean isDeleted;
+    private String userType;
+
+    private Long createUserId;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private Boolean isDeleted;
 
     public Long getUserId() {
         return userId;
@@ -25,14 +27,6 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
     }
 
     public String getUserName() {
@@ -59,12 +53,20 @@ public class User {
         this.userPass = userPass == null ? null : userPass.trim();
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setUserType(String userType) {
+        this.userType = userType == null ? null : userType.trim();
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
     public Date getCreateTime() {
@@ -81,5 +83,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

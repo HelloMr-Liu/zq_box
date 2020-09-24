@@ -3,7 +3,8 @@ package zq.bim.dao;
 import java.util.List;
 import java.util.Map;
 
-import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Param;
+
 import zq.bim.entity.DeviceStream;
 import zq.bim.entity.dto.DeviceDTO;
 import zq.bim.entity.dto.DeviceStreamDTO;
@@ -31,6 +32,8 @@ public interface DeviceStreamDao {
     void updateStreamStatus(@Param("list") List<Map<String,Object>> list);
     
     void updateOpStatus(@Param("list") List<Long> streamIds,@Param("status") Integer status);
+    
+    List<DeviceStream> selectByDeviceId(Long deviceId);
 
 
     /**

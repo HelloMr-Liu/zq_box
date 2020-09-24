@@ -1,9 +1,7 @@
 package zq.bim.entity.dto.query;
 
-
 import zq.bim.constant.GLOBAL_STATE;
 
-import java.util.HashMap;
 
 /**
  * 功能：接收全局分页搜索属性
@@ -22,12 +20,10 @@ public class QueryGlobalDefinition {
      */
     private Integer pageSize=10;
 
-
     /**
      * 删除标志
      */
     private boolean isDel= GLOBAL_STATE.NO_DEL.STATE;
-
 
     public Integer getCurrentPage() {
         return currentPage;
@@ -42,12 +38,16 @@ public class QueryGlobalDefinition {
     }
 
     public void setPageSize(Integer pageSize) {
-        pageSize = pageSize;
+        this.pageSize = pageSize;
     }
 
-    public boolean isDel() {return isDel;}
+    public boolean isDel() {
+        return isDel;
+    }
 
-    public void setDel(boolean del) {isDel = del;}
+    public void setDel(boolean del) {
+        isDel = del;
+    }
 }
     
     

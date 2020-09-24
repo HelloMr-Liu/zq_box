@@ -57,11 +57,9 @@ public class MyAop {
 			proceed = pjp.proceed();
 
 		} catch (Throwable e) {
+			e.printStackTrace();
 			ReturnView returnView = analyzeThrowable(e);
 			
-			rv = new ReturnView(500, returnView.getMessage());
-			
-			returnView.setMessage("请求错误，请联系管理员");
 			proceed =returnView.toJson(); 
 				
 		}finally {

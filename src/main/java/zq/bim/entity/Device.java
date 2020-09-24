@@ -21,6 +21,8 @@ public class Device {
 
     private Date heartbeatTime;
 
+    private Long createUserId;
+
     private Date createTime;
 
     private Date updateTime;
@@ -95,6 +97,14 @@ public class Device {
 
     public void setHeartbeatTime(Date heartbeatTime) {
         this.heartbeatTime = heartbeatTime;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
     public Date getCreateTime() {

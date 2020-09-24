@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zq.bim.dao.FileDataUploadDao" >
+  <resultMap id="BaseResultMap" type="zq.bim.entity.FileDataUpload" >
+    <id column="UPLOAD_ID" property="uploadId" jdbcType="CHAR" />
+    <result column="FILE_MD5" property="fileMd5" jdbcType="CHAR" />
+    <result column="IS_FINISHED" property="isFinished" jdbcType="CHAR" />
+    <result column="BYTE_BEGIN" property="byteBegin" jdbcType="BIGINT" />
+    <result column="BYTE_END" property="byteEnd" jdbcType="BIGINT" />
+    <result column="BYTE_COUNT" property="byteCount" jdbcType="BIGINT" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UPLOAD_ID, FILE_MD5, IS_FINISHED, BYTE_BEGIN, BYTE_END, BYTE_COUNT, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_file_data_upload
+    where UPLOAD_ID = #{uploadId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_file_data_upload
+    where UPLOAD_ID = #{uploadId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="zq.bim.entity.FileDataUpload" >
+    insert into tbl_file_data_upload (UPLOAD_ID, FILE_MD5, IS_FINISHED, 
+      BYTE_BEGIN, BYTE_END, BYTE_COUNT, 
+      UPDATE_TIME)
+    values (#{uploadId,jdbcType=CHAR}, #{fileMd5,jdbcType=CHAR}, #{isFinished,jdbcType=CHAR}, 
+      #{byteBegin,jdbcType=BIGINT}, #{byteEnd,jdbcType=BIGINT}, #{byteCount,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zq.bim.entity.FileDataUpload" >
+    insert into tbl_file_data_upload
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uploadId != null" >
+        UPLOAD_ID,
+      </if>
+      <if test="fileMd5 != null" >
+        FILE_MD5,
+      </if>
+      <if test="isFinished != null" >
+        IS_FINISHED,
+      </if>
+      <if test="byteBegin != null" >
+        BYTE_BEGIN,
+      </if>
+      <if test="byteEnd != null" >
+        BYTE_END,
+      </if>
+      <if test="byteCount != null" >
+        BYTE_COUNT,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uploadId != null" >
+        #{uploadId,jdbcType=CHAR},
+      </if>
+      <if test="fileMd5 != null" >
+        #{fileMd5,jdbcType=CHAR},
+      </if>
+      <if test="isFinished != null" >
+        #{isFinished,jdbcType=CHAR},
+      </if>
+      <if test="byteBegin != null" >
+        #{byteBegin,jdbcType=BIGINT},
+      </if>
+      <if test="byteEnd != null" >
+        #{byteEnd,jdbcType=BIGINT},
+      </if>
+      <if test="byteCount != null" >
+        #{byteCount,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.FileDataUpload" >
+    update tbl_file_data_upload
+    <set >
+      <if test="fileMd5 != null" >
+        FILE_MD5 = #{fileMd5,jdbcType=CHAR},
+      </if>
+      <if test="isFinished != null" >
+        IS_FINISHED = #{isFinished,jdbcType=CHAR},
+      </if>
+      <if test="byteBegin != null" >
+        BYTE_BEGIN = #{byteBegin,jdbcType=BIGINT},
+      </if>
+      <if test="byteEnd != null" >
+        BYTE_END = #{byteEnd,jdbcType=BIGINT},
+      </if>
+      <if test="byteCount != null" >
+        BYTE_COUNT = #{byteCount,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UPLOAD_ID = #{uploadId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zq.bim.entity.FileDataUpload" >
+    update tbl_file_data_upload
+    set FILE_MD5 = #{fileMd5,jdbcType=CHAR},
+      IS_FINISHED = #{isFinished,jdbcType=CHAR},
+      BYTE_BEGIN = #{byteBegin,jdbcType=BIGINT},
+      BYTE_END = #{byteEnd,jdbcType=BIGINT},
+      BYTE_COUNT = #{byteCount,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where UPLOAD_ID = #{uploadId,jdbcType=CHAR}
+  </update>
+  
+  <delete id="deleteByFileMd5" parameterType="java.lang.String" >
+	delete FROM tbl_file_data_upload WHERE file_md5 = #{fileMd5}  
+  </delete>
+  
+   <update id="finish" parameterType="java.lang.String" >
+  	UPDATE tbl_file_data_upload SET IS_FINISHED=1 WHERE FILE_MD5 =#{fileMd5}
+  </update>
+  
+  <select id="judgeFinish"  resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT COUNT(1) FROM tbl_file_data_upload 
+    WHERE FILE_MD5=#{fileMd5}   AND IS_FINISHED = '0'
+  </select>
+  
+  <select id="getNewUpload" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_file_data_upload
+    WHERE FILE_MD5=#{fileMd5}
+    AND IS_FINISHED = '0' AND DATE_ADD(UPDATE_TIME,INTERVAL 1 MINUTE) <![CDATA[ <= ]]>  NOW() LIMIT 0,1
+  </select>
+  
+  <select id="sumFinish"  resultType="java.lang.Long" parameterType="java.lang.String" >
+	   SELECT SUM(BYTE_COUNT) FROM tbl_file_data_upload WHERE FILE_MD5=#{fileMd5}
+  </select>
+</mapper>

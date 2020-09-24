@@ -7,8 +7,8 @@ package zq.bim.constant;
  */
 public enum STREAM_LIFE_STATE {
 
-    NORMAL(true,"正常"),
-    ABNORMAL(false,"异常");
+    NORMAL(true,"在线"),
+    ABNORMAL(false,"离线");
     public boolean STATE;           //状态值
     public String MESS;             //状态值的描述信息
 

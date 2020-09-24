@@ -7,6 +7,7 @@ import zq.bim.valid.UpdateValid;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * 功能：接收项目属性
@@ -28,6 +29,36 @@ public class ParameterProjectDefinition {
     @NotBlank(message = "项目名称为空",groups = {AddValid.class, UpdateValid.class})
     private String projectName;
 
+    /**
+     * 电话号码
+     */
+    @Pattern(regexp = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[1-9]))\\d{8}$", message = "请输入正确的手机号",groups = {AddValid.class,UpdateValid.class})
+    @NotBlank(message = "电话号码为空",groups = {AddValid.class,UpdateValid.class})
+    private String projectAccount;
+
+    /**
+     * 项目负责人
+     */
+    @Length(message = "项目负责人长度不能超过50",groups = {AddValid.class, UpdateValid.class})
+    @NotBlank(message = "项目负责人为空",groups = {AddValid.class, UpdateValid.class})
+    private String projectLeader;
+
+//    /**
+//     * 项目访问密码
+//     */
+//    @Length(message = "项目访问密码长度不能超过50",max = 50,groups = {UpdateValid.class})
+//    @NotBlank(message = "项目访问密码为空",groups = {UpdateValid.class})
+//    private String projectAccessPass;
+
+    /**
+     * 文件id
+     */
+    private Long fileId;
+
+    /**
+     * 文件名称
+     */
+    private String fileName;
 
     public Long getProjectId() {
         return projectId;
@@ -43,6 +74,38 @@ public class ParameterProjectDefinition {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getProjectAccount() {
+        return projectAccount;
+    }
+
+    public void setProjectAccount(String projectAccount) {
+        this.projectAccount = projectAccount;
+    }
+
+    public String getProjectLeader() {
+        return projectLeader;
+    }
+
+    public void setProjectLeader(String projectLeader) {
+        this.projectLeader = projectLeader;
+    }
+
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
     

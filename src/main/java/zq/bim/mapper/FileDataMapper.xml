@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zq.bim.dao.FileDataDao" >
+  <resultMap id="BaseResultMap" type="zq.bim.entity.FileData" >
+    <id column="FILE_MD5" property="fileMd5" jdbcType="CHAR" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="CHAR" />
+    <result column="IS_FINISHED" property="isFinished" jdbcType="CHAR" />
+    <result column="FILE_SIZE" property="fileSize" jdbcType="BIGINT" />
+    <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
+    <result column="WRITE_BYTE" property="writeByte" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FILE_MD5, IS_DELETED, IS_FINISHED, FILE_SIZE, FILE_PATH, WRITE_BYTE, CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_file_data
+    where FILE_MD5 = #{fileMd5,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_file_data
+    where FILE_MD5 = #{fileMd5,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="zq.bim.entity.FileData" >
+    insert into tbl_file_data (FILE_MD5, IS_DELETED, IS_FINISHED, 
+      FILE_SIZE, FILE_PATH, WRITE_BYTE, 
+      CREATE_TIME)
+    values (#{fileMd5,jdbcType=CHAR}, #{isDeleted,jdbcType=CHAR}, #{isFinished,jdbcType=CHAR}, 
+      #{fileSize,jdbcType=BIGINT}, #{filePath,jdbcType=VARCHAR}, #{writeByte,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="zq.bim.entity.FileData" >
+    insert into tbl_file_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileMd5 != null" >
+        FILE_MD5,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+      <if test="isFinished != null" >
+        IS_FINISHED,
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE,
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH,
+      </if>
+      <if test="writeByte != null" >
+        WRITE_BYTE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileMd5 != null" >
+        #{fileMd5,jdbcType=CHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="isFinished != null" >
+        #{isFinished,jdbcType=CHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="writeByte != null" >
+        #{writeByte,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.FileData" >
+    update tbl_file_data
+    <set >
+      <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted,jdbcType=CHAR},
+      </if>
+      <if test="isFinished != null" >
+        IS_FINISHED = #{isFinished,jdbcType=CHAR},
+      </if>
+      <if test="fileSize != null" >
+        FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="writeByte != null" >
+        WRITE_BYTE = #{writeByte,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FILE_MD5 = #{fileMd5,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zq.bim.entity.FileData" >
+    update tbl_file_data
+    set IS_DELETED = #{isDeleted,jdbcType=CHAR},
+      IS_FINISHED = #{isFinished,jdbcType=CHAR},
+      FILE_SIZE = #{fileSize,jdbcType=BIGINT},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      WRITE_BYTE = #{writeByte,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where FILE_MD5 = #{fileMd5,jdbcType=CHAR}
+  </update>
+</mapper>

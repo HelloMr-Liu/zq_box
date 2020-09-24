@@ -2,6 +2,7 @@ package zq.bim.entity.dto.parameter;
 
 import org.hibernate.validator.constraints.Length;
 import zq.bim.valid.AddValid;
+import zq.bim.valid.QueryValid;
 import zq.bim.valid.UpdateValid;
 
 import javax.validation.constraints.NotBlank;
@@ -17,22 +18,21 @@ public class ParameterDeviceDefinition {
     /**
      * 设备id
      */
-    @NotNull(message = "设备id为空",groups = {UpdateValid.class})
+    @NotNull(message = "设备id为空",groups = {QueryValid.class,UpdateValid.class})
     private Long deviceId;
-
 
     /**
      * 项目id
      */
-    @NotNull(message = "项目id为空",groups = {AddValid.class,UpdateValid.class})
+    @NotNull(message = "项目id为空",groups = {AddValid.class})
     private Long projectId;
 
     /**
      * 设备标识
      */
-    @Length(max =100,message = "设备标识长度超过100",groups = {AddValid.class,UpdateValid.class})
-    @NotBlank(message = "设备标识为空",groups = {AddValid.class,UpdateValid.class})
-    private String deviceNumber;
+//    @Length(max =100,message = "设备标识长度超过100",groups = {AddValid.class,UpdateValid.class})
+//    @NotBlank(message = "设备标识为空",groups = {AddValid.class,UpdateValid.class})
+//    private String deviceNumber;
 
     /**
      * 设备名称
@@ -45,9 +45,9 @@ public class ParameterDeviceDefinition {
     /**
      * 设备描述
      */
-    @Length(max =30,message = "设备描述长度超过200",groups = {AddValid.class,UpdateValid.class})
-    @NotBlank(message = "设备描述为空",groups = {AddValid.class,UpdateValid.class})
-    private String deviceDesc;
+//    @Length(max =30,message = "设备描述长度超过200",groups = {AddValid.class,UpdateValid.class})
+//    @NotBlank(message = "设备描述为空",groups = {AddValid.class,UpdateValid.class})
+//    private String deviceDesc;
 
 
     public Long getDeviceId() {
@@ -66,14 +66,6 @@ public class ParameterDeviceDefinition {
         this.projectId = projectId;
     }
 
-    public String getDeviceNumber() {
-        return deviceNumber;
-    }
-
-    public void setDeviceNumber(String deviceNumber) {
-        this.deviceNumber = deviceNumber;
-    }
-
     public String getDeviceName() {
         return deviceName;
     }
@@ -82,13 +74,10 @@ public class ParameterDeviceDefinition {
         this.deviceName = deviceName;
     }
 
-    public String getDeviceDesc() {
-        return deviceDesc;
-    }
 
-    public void setDeviceDesc(String deviceDesc) {
-        this.deviceDesc = deviceDesc;
-    }
+
+
+
 }
     
     
