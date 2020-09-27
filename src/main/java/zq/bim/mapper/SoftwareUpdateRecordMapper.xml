@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zq.bim.dao.SoftwareUpdateRecordDao" >
+  <resultMap id="BaseResultMap" type="zq.bim.entity.SoftwareUpdateRecord" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="DEVICE_ID" property="deviceId" jdbcType="BIGINT" />
+    <result column="SOFTWARE_UPDATE_ID" property="softwareUpdateId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="MSG" property="msg" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DEVICE_ID, SOFTWARE_UPDATE_ID, STATUS, MSG, CREATE_TIME, CREATE_USER_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_software_update_record
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_software_update_record
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="zq.bim.entity.SoftwareUpdateRecord" >
+    insert into tbl_software_update_record (ID, DEVICE_ID, SOFTWARE_UPDATE_ID, 
+      STATUS, MSG, CREATE_TIME, 
+      CREATE_USER_ID)
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{softwareUpdateId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{msg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="zq.bim.entity.SoftwareUpdateRecord" >
+    insert into tbl_software_update_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="deviceId != null" >
+        DEVICE_ID,
+      </if>
+      <if test="softwareUpdateId != null" >
+        SOFTWARE_UPDATE_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="msg != null" >
+        MSG,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="softwareUpdateId != null" >
+        #{softwareUpdateId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zq.bim.entity.SoftwareUpdateRecord" >
+    update tbl_software_update_record
+    <set >
+      <if test="deviceId != null" >
+        DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="softwareUpdateId != null" >
+        SOFTWARE_UPDATE_ID = #{softwareUpdateId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        MSG = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zq.bim.entity.SoftwareUpdateRecord" >
+    update tbl_software_update_record
+    set DEVICE_ID = #{deviceId,jdbcType=BIGINT},
+      SOFTWARE_UPDATE_ID = #{softwareUpdateId,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=INTEGER},
+      MSG = #{msg,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByDeviceIdAndUpdateId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tbl_software_update_record
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    AND SOFTWARE_UPDATE_ID = #{softwareUpdateId,jdbcType=BIGINT}
+    AND STATUS = #{status,jdbcType=INTEGER}
+    ORDER BY CREATE_TIME DESC 
+    LIMIT 0,1
+  </select>
+  
+  <select id="selectUpdateIng" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tbl_software_update_record
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    AND SOFTWARE_UPDATE_ID = #{softwareUpdateId,jdbcType=BIGINT}
+    AND (STATUS=1 OR STATUS=3)
+    ORDER BY CREATE_TIME DESC 
+    LIMIT 0,1
+  </select>
+  
+   <select id="selectByDeviceId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tbl_software_update_record
+    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    AND STATUS = #{status,jdbcType=INTEGER}
+    ORDER BY CREATE_TIME DESC
+    LIMIT 0,1
+  </select>
+</mapper>

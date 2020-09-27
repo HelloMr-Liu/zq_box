@@ -145,7 +145,23 @@ public class DeviceStreamServiceImpl implements DeviceStreamService {
         //参数校验成功
         ReturnView returnView = checkParameters(definition);
         if(returnView.getCode()!=200)return returnView;
+        
+        Long streamId=definition.getStreamId();
 
+        DeviceStream stream=streamDao.selectByPrimaryKey(streamId);
+        if(stream==null || stream.getIsDeleted()==true) {
+        	return ReturnView.error("修改失败,数据不存在!");
+        }
+        
+        //无状态
+        Integer opStatus=STREAM_OP_STATE.OPERATION_NONE.STATE;
+        //地址没改不需要发送到设备
+        if(stream.getPullStreamAddress()!=definition.getPullStreamAddress()
+         ||stream.getPushStreamAddress()!=definition.getPushStreamAddress()) {
+        	//修改状态
+        	opStatus=STREAM_OP_STATE.OPERATION_INSERT.STATE;
+        }
+        
         //封装信息设备流信息
         DeviceStream deviceStream=new DeviceStream();
         deviceStream.setStreamId(definition.getStreamId());                     //流id
@@ -154,7 +170,7 @@ public class DeviceStreamServiceImpl implements DeviceStreamService {
         deviceStream.setPushStreamAddress(definition.getPushStreamAddress());   //推流地址
         deviceStream.setPlayAddress(definition.getPlayAddress());               //播放地址
         deviceStream.setUpdateTime(new Date());                                 //修改时间
-        deviceStream.setOpStatus(STREAM_OP_STATE.OPERATION_INSERT.STATE);       //操作状态
+        deviceStream.setOpStatus(opStatus);       //操作状态
 
         //持久化到数据库中
         streamDao.updateByPrimaryKeySelective(deviceStream);

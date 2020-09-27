@@ -47,6 +47,7 @@ public class FileController {
 			ReturnView rtn= fileService.preparedUpload(fileChildId, fileMd5, fileSize, fileStep);
 			return rtn.toJson();
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error(e.getMessage());
 			return ReturnView.error("请求失败!").toJson();
 		}
@@ -71,6 +72,7 @@ public class FileController {
 			ReturnView rtn= fileService.upload(file, fileChildId, fileMd5,start, fileStep);
 			return rtn.toJson();
 		} catch (Exception e) { 
+			e.printStackTrace();
 			log.error(e.getMessage());
 			return ReturnView.error("上传失败!").toJson();
 		}

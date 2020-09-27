@@ -2,6 +2,7 @@ package zq.bim.service;
 
 import zq.bim.entity.dto.HeartbeatCheckDto;
 import zq.bim.entity.dto.InitDataSyncDto;
+import zq.bim.entity.dto.SoftwareUpdateCallbackDto;
 import zq.bim.entity.dto.StreamCallbackDto;
 import zq.bim.result.ReturnView;
 
@@ -31,4 +32,19 @@ public interface BoxSyncService {
 	 * @return
 	 */
 	public Object initDataSync(InitDataSyncDto dto);
+	
+	
+	/**
+	 * 查询设备更新情况
+	 * @return
+	 */
+	public String selectSoftwareUpdate(String deviceNumber);
+	
+	
+	/***
+	 * 设备更新回调
+	 * @param dto
+	 * @return
+	 */
+	public Object softwareUpdateCallback(SoftwareUpdateCallbackDto dto);
 }

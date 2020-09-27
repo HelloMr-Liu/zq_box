@@ -64,6 +64,12 @@ public class EncryptionUtil {
     }
 
 
+    
+    public static void main(String[] args) {
+    	String pass=getDecryptString("VKrLStkHj0tha0YgTI9MUg==");
+    	System.out.println(pass);
+	}
+    
     /***
      * 获取解密之后的信息
      * @param str

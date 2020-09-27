@@ -18,6 +18,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.Signature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,20 +48,53 @@ public class MyAop {
 		// 请求返回值
 		Object proceed = null;
 		ReturnView rv = null;
-		long t1 = new Date().getTime();
+		
+		//初始时间
+		final Date createTime = new Date();
+		
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		
+		//异常返回值
+		String exceptionResponse = null;
+		
+		//获取参数名称
+		Signature signature = pjp.getSignature();
+		MethodSignature methodSignature = (MethodSignature) signature;
+		final String[] parameterNames = methodSignature.getParameterNames();
+		//获取参数
+		final Object[] args = pjp.getArgs();
+		
+		//日志类型
+		int logType = 1;
+				
 		try {
-			/*
-			 * //提取请求头 String fetchHeader = fetchHeader(); if (fetchHeader != null) { return
-			 * fetchHeader; }
-			 */
+			//用户身份验证
 			
 			proceed = pjp.proceed();
 
 		} catch (Throwable e) {
 			e.printStackTrace();
 			ReturnView returnView = analyzeThrowable(e);
-			
 			proceed =returnView.toJson(); 
+			
+			StringBuilder sb = new StringBuilder(200);
+			sb.append(e.getCause()+"\t");
+			sb.append(e.getMessage()+"\t");
+			StackTraceElement[] stackTrace = e.getStackTrace();
+			for (StackTraceElement stackTraceElement : stackTrace) {
+				if (!stackTraceElement.getClassName().startsWith("bim.zh")) {
+					continue;
+				}
+				
+				sb.append("类名："+stackTraceElement.getFileName()
+							+" 方法名："+stackTraceElement.getMethodName()
+							+" 行号："+stackTraceElement.getLineNumber()
+							+"\t"
+						);
+			}
+			
+			logType= 2 ;
+			exceptionResponse = sb.toString();
 				
 		}finally {
 			
@@ -69,6 +103,38 @@ public class MyAop {
 		}
 		
 		return proceed;
+	}
+	
+	private void saveLog(String logType,String[] parameterNames,Object[] args,HttpServletRequest request,String operationContent,Long userId) {
+		
+		Map<String, Object> paramMap=insertRequestParam(parameterNames, args);
+		
+		
+	}
+	
+private Map<String, Object> insertRequestParam(String[] parameterNames,Object[] args){
+		
+		try {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < args.length; i++) {
+				Object object = args[i];
+				try {
+					if(object instanceof ServletRequest || object instanceof ServletResponse || object instanceof MultipartFile){
+						
+					}else{
+						map.put(parameterNames[i], object);
+					}
+					
+				} catch (Exception e) {
+				}
+			} 
+			
+			return map;
+		} catch (Exception e) {
+			return null;
+		}
+		 
 	}
 	
 	

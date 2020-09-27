@@ -31,7 +31,7 @@ public class DeviceHeartManager {
     @Autowired
     private DeviceDao deviceDao;
     /**
-     * 每2分钟 监听设备健康状态
+     * 每1分钟 监听设备健康状态
      */
     @Scheduled(cron="0 */1 * * * ?")
     public void timingManager() {

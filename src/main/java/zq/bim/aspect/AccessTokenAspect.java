@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import zq.bim.constant.REQUEST_MESS;
 import zq.bim.entity.dto.UserLoginOKDefinition;
+import zq.bim.lock.OperatingLock;
 import zq.bim.queue.SystemOperationLogMessageQueue;
 import zq.bim.result.ReturnView;
 import zq.bim.util.NetworkUtil;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 解决：用于访问权限校验,权限不够不能访问
@@ -66,9 +68,23 @@ public class AccessTokenAspect {
         //添加一条请求日志信息
         messageQueue.addOperationLogMessage("",requestArgs.toString(),currentRequestPath,joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName(),userLoginInfo.getUniqueId());
 
-        //执行当前接口对应的方法
-        Object proceed = joinPoint.proceed();
-        return proceed;
+        //获取原子锁操作
+        ReentrantReadWriteLock lock = OperatingLock.getLock(currentRequestPath);
+        try{
+            System.out.println(lock!=null);
+            //开启原子锁操作
+            if(lock!=null)lock.writeLock().lock();
+
+            //执行当前接口对应的方法
+            Object proceed = joinPoint.proceed();
+            return proceed;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ReturnView.error("系统原子锁操作异常").toJson();
+        }finally {
+            //关闭原子锁操作
+            if(lock!=null&&lock.writeLock().getHoldCount()>0)lock.writeLock().unlock();
+        }
     }
 }
     

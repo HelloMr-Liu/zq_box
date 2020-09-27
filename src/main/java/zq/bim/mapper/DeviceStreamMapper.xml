@@ -193,7 +193,6 @@
   	<include refid="Base_Column_List" />
  	FROM  tbl_device_stream
  	WHERE DEVICE_ID=#{deviceId}
- 	AND IS_DELETED=FALSE
  	AND OP_STATUS<![CDATA[ <> ]]>0 AND OP_STATUS<![CDATA[ <> ]]>3
   </select>
   
